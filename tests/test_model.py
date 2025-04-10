@@ -14,16 +14,16 @@ def sample_category_test():
     )
 
 def test_check_product(sample_product_test):
-    assert sample_product_test.title == "Iphone 15"
-    assert sample_product_test.details == "512GB, Gray space"
-    assert sample_product_test.cost == 210000.0
-    assert sample_product_test.amount == 8
+    assert sample_product_test.name == "Iphone 15"
+    assert sample_product_test.description == "512GB, Gray space"
+    assert sample_product_test.price == 210000.0
+    assert sample_product_test.price == 8
 
 def test_check_category(sample_category_test):
-    assert sample_category_test.label == "Смартфоны"
+    assert sample_category_test.name == "Смартфоны"
     assert (
-        sample_category_test.info
+        sample_category_test.description
         == "Современные смартфоны с высокими характеристиками"
     )
-    assert sample_category_test.items == []
+    assert sample_category_test.products == []
 

@@ -1,17 +1,17 @@
 class Product:
-    def __init__(self, title, details, cost, amount):
-        self.title = title
-        self.details = details
-        self.cost = cost
-        self.amount = amount
+    def __init__(self, name, description, price, quality):
+        self.name = name
+        self.description = description
+        self.price = price
+        self.quantity = quality
 
 class Category:
-    total_items = 0
-    total_groups = 0
+    category_count = 0
+    product_count = 0
 
-    def __init__(self, label, info, items):
-        self.label = label
-        self.info = info
-        self.items = items
-        Category.total_groups += 1
-        Category.total_items += len(items)
+    def __init__(self, name, description, products):
+        self.name = name
+        self.description = description
+        self.products = products
+        Category.category_count += 1
+        Category.product_count = sum(product.quantity for product in self.products)
