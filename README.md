@@ -78,6 +78,6 @@ for product in electronics_category.products:
 ```
 File         statements  missing  excluded  coverage
 src\__init__.py  0         0         0        100%
-src\model.py     15        0         0        100%
-Total            15        0         0        100%
+src\model.py     31        0         0        100%
+Total            31        0         0        100%
 ```
