@@ -30,8 +30,11 @@ class Category:
 
     def add_product(self, product):
         """Добавляет продукт в список и увеличивает счетчик продуктов."""
-        self.__products.append(product)
-        Category.product_count += 1
+        if isinstance(product, Product):
+            self.__products.append(product)
+            Category.product_count += 1
+        else:
+            print("Можно добавлять только объекты типа Product или его наследников.")
 
     @property
     def products(self):
