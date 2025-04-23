@@ -13,7 +13,7 @@ def test_check_product(sample_product_test):
     assert sample_product_test.name == "Iphone 15"
     assert sample_product_test.description == "512GB, Gray space"
     assert sample_product_test.price == 210000.0
-    assert sample_product_test.quantity == 8  # Исправлено здесь
+    assert sample_product_test.quantity == 8
 
 def test_check_category(sample_category_test):
     assert sample_category_test.name == "Смартфоны"
@@ -42,3 +42,15 @@ def test_new_product():
     new_product = Category.new_product(product_data)
     assert new_product.name == 'Laptop'
     assert new_product.price == 60000.0
+
+def test_product_str(sample_product_test):
+    assert str(sample_product_test) == "Iphone 15, 210000.0 руб. Остаток: 8 шт."
+
+def test_category_str(sample_category_test, sample_product_test):
+    sample_category_test.add_product(sample_product_test)
+    assert str(sample_category_test) == "Смартфоны, количество продуктов: 8 шт."
+
+def test_product_addition(sample_product_test):
+    product2 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+    result = sample_product_test + product2
+    assert result == 210000.0 * 8 + 180000.0 * 5
