@@ -28,3 +28,7 @@ if __name__ == "__main__":
 
     print(Category.category_count)
     print(Category.product_count)
+
+    # Пример использования итерации по категории
+    for product in category1:
+        print(product)

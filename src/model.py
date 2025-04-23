@@ -49,10 +49,7 @@ class Category:
     @property
     def products(self):
         """Геттер для приватного атрибута products."""
-        return "\n".join(
-            f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт."
-            for product in self.__products
-        )
+        return "\n".join(str(product) for product in self.__products)
 
     def __str__(self):
         """Строковое представление объекта Category."""
@@ -68,3 +65,23 @@ class Category:
             price=product_data['price'],
             quantity=product_data['quantity']
         )
+
+    def __iter__(self):
+        """Возвращает итератор по продуктам категории."""
+        return CategoryIterator(self)
+
+class CategoryIterator:
+    def __init__(self, category):
+        self._category = category
+        self._index = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self._index < len(self._category._Category__products):
+            product = self._category._Category__products[self._index]
+            self._index += 1
+            return product
+        else:
+            raise StopIteration
