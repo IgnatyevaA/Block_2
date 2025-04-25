@@ -61,7 +61,7 @@ class Category:
 
     def add_product(self, product):
         """Добавляет продукт в список и увеличивает счетчик продуктов."""
-        if isinstance(product, Product):
+        if issubclass(type(product), Product):
             self.__products.append(product)
             Category.product_count += 1
         else:
