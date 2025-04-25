@@ -18,6 +18,16 @@ class Product:
         else:
             print("Цена не должна быть нулевая или отрицательная")
 
+    def __str__(self):
+        """Строковое представление объекта Product."""
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        """Магический метод сложения для объектов Product."""
+        if isinstance(other, Product):
+            return self.price * self.quantity + other.price * other.quantity
+        raise TypeError("Операнд справа должен иметь тип Product")
+
 class Category:
     category_count = 0
     product_count = 0
@@ -39,10 +49,12 @@ class Category:
     @property
     def products(self):
         """Геттер для приватного атрибута products."""
-        return "\n".join(
-            f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт."
-            for product in self.__products
-        )
+        return "\n".join(str(product) for product in self.__products)
+
+    def __str__(self):
+        """Строковое представление объекта Category."""
+        total_quantity = sum(product.quantity for product in self.__products)
+        return f"{self.name}, количество продуктов: {total_quantity} шт."
 
     @classmethod
     def new_product(cls, product_data):
@@ -53,3 +65,23 @@ class Category:
             price=product_data['price'],
             quantity=product_data['quantity']
         )
+
+    def __iter__(self):
+        """Возвращает итератор по продуктам категории."""
+        return CategoryIterator(self)
+
+class CategoryIterator:
+    def __init__(self, category):
+        self._category = category
+        self._index = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self._index < len(self._category._Category__products):
+            product = self._category._Category__products[self._index]
+            self._index += 1
+            return product
+        else:
+            raise StopIteration
