@@ -24,9 +24,30 @@ class Product:
 
     def __add__(self, other):
         """Магический метод сложения для объектов Product."""
-        if isinstance(other, Product):
+        if type(self) == type(other):
             return self.price * self.quantity + other.price * other.quantity
-        raise TypeError("Операнд справа должен иметь тип Product")
+        raise TypeError("Операнд справа должен иметь тот же тип")
+
+class Smartphone(Product):
+    def __init__(self, name, description, price, quantity, efficiency, model, memory, color):
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+    def __str__(self):
+        return f"{self.name}, {self.model}, {self.memory}, {self.color}, {self.price} руб. Остаток: {self.quantity} шт."
+
+class LawnGrass(Product):
+    def __init__(self, name, description, price, quantity, country, germination_period, color):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
+
+    def __str__(self):
+        return f"{self.name}, {self.country}, {self.germination_period}, {self.color}, {self.price} руб. Остаток: {self.quantity} шт."
 
 class Category:
     category_count = 0
@@ -44,7 +65,7 @@ class Category:
             self.__products.append(product)
             Category.product_count += 1
         else:
-            print("Можно добавлять только объекты типа Product или его наследников.")
+            raise TypeError("Можно добавлять только объекты типа Product или его наследников.")
 
     @property
     def products(self):
