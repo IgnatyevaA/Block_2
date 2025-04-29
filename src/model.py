@@ -1,9 +1,40 @@
-class Product:
+from abc import ABC, abstractmethod
+
+class BaseProduct(ABC):
+    @abstractmethod
+    def __init__(self, name, description, price, quantity):
+        pass
+
+    @property
+    @abstractmethod
+    def price(self):
+        pass
+
+    @price.setter
+    @abstractmethod
+    def price(self, new_price):
+        pass
+
+    @abstractmethod
+    def __str__(self):
+        pass
+
+    @abstractmethod
+    def __add__(self, other):
+        pass
+
+class LoggingMixin:
+    def __init__(self, *args, **kwargs):
+        print(f"Создан объект {self.__class__.__name__} с параметрами: {args}, {kwargs}")
+        super().__init__(*args, **kwargs)
+
+class Product(LoggingMixin, BaseProduct):
     def __init__(self, name, description, price, quantity):
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
+        super().__init__(name, description, price, quantity)
 
     @property
     def price(self):

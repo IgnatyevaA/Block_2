@@ -59,3 +59,8 @@ def test_category_iteration(sample_category, sample_smartphone):
     assert len(products) == 2
     assert products[0] == sample_smartphone
     assert products[1] == smartphone2
+
+def test_logging_mixin(capsys):
+    product = Product("Test Product", "Description", 100.0, 10)
+    captured = capsys.readouterr()
+    assert "Создан объект Product с параметрами: ('Test Product', 'Description', 100.0, 10), {}" in captured.out
