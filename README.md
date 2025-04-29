@@ -141,5 +141,5 @@ pip install pytest-cov
 ```bash
 File               statements  missing  excluded  coverage
 src\__init__.py         0         0         0        100%
-src\model.py            73        9         0         88%
-Total                   73        9         0         88%
+src\model.py            97       15         0         85%
+Total                   97       15         0         85%
