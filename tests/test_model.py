@@ -1,5 +1,5 @@
 import pytest
-from src.model import Product, Smartphone, LawnGrass, Category
+from src.model import Product, Smartphone, LawnGrass, Category, ZeroQuantityError
 
 @pytest.fixture()
 def sample_smartphone():
@@ -64,3 +64,16 @@ def test_logging_mixin(capsys):
     product = Product("Test Product", "Description", 100.0, 10)
     captured = capsys.readouterr()
     assert "Создан объект Product с параметрами: ('Test Product', 'Description', 100.0, 10), {}" in captured.out
+
+def test_zero_quantity_product():
+    with pytest.raises(ZeroQuantityError, match="Товар с нулевым количеством не может быть добавлен"):
+        Product("Test Product", "Description", 100.0, 0)
+
+def test_average_price(sample_category, sample_smartphone):
+    sample_category.add_product(sample_smartphone)
+    smartphone2 = Smartphone("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5, "High", "S23 Ultra", "256GB", "Gray")
+    sample_category.add_product(smartphone2)
+    assert sample_category.average_price() == (210000.0 + 180000.0) / 2
+
+def test_average_price_no_products(sample_category):
+    assert sample_category.average_price() == 0
