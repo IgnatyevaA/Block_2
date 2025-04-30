@@ -28,15 +28,10 @@ class LoggingMixin:
         print(f"Создан объект {self.__class__.__name__} с параметрами: {args}, {kwargs}")
         super().__init__(*args, **kwargs)
 
-class ZeroQuantityError(Exception):
-    def __init__(self, message="Товар с нулевым количеством не может быть добавлен"):
-        self.message = message
-        super().__init__(self.message)
-
 class Product(LoggingMixin, BaseProduct):
     def __init__(self, name, description, price, quantity):
         if quantity == 0:
-            raise ZeroQuantityError()
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         self.name = name
         self.description = description
         self.__price = price
@@ -106,7 +101,7 @@ class Category:
                 print("Товар добавлен")
             else:
                 raise TypeError("Можно добавлять только объекты типа Product или его наследников.")
-        except ZeroQuantityError as e:
+        except ValueError as e:
             print(e)
         finally:
             print("Обработка добавления товара завершена")
