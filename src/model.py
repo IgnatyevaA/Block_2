@@ -30,6 +30,8 @@ class LoggingMixin:
 
 class Product(LoggingMixin, BaseProduct):
     def __init__(self, name, description, price, quantity):
+        if quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         self.name = name
         self.description = description
         self.__price = price
@@ -92,11 +94,17 @@ class Category:
 
     def add_product(self, product):
         """Добавляет продукт в список и увеличивает счетчик продуктов."""
-        if issubclass(type(product), Product):
-            self.__products.append(product)
-            Category.product_count += 1
-        else:
-            raise TypeError("Можно добавлять только объекты типа Product или его наследников.")
+        try:
+            if issubclass(type(product), Product):
+                self.__products.append(product)
+                Category.product_count += 1
+                print("Товар добавлен")
+            else:
+                raise TypeError("Можно добавлять только объекты типа Product или его наследников.")
+        except ValueError as e:
+            print(e)
+        finally:
+            print("Обработка добавления товара завершена")
 
     @property
     def products(self):
@@ -121,6 +129,12 @@ class Category:
     def __iter__(self):
         """Возвращает итератор по продуктам категории."""
         return CategoryIterator(self)
+
+    def average_price(self):
+        if not self.__products:
+            return 0
+        total_price = sum(product.price for product in self.__products)
+        return total_price / len(self.__products)
 
 class CategoryIterator:
     def __init__(self, category):
